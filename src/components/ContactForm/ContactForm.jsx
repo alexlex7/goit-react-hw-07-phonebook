@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import s from './ContactForm.module.css';
-import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
+// eslint-disable-next-line no-unused-vars
+import { addContact } from 'redux/contacts/contactsSlice';
+// якщо видалити імпорт addContact буде помилка
+
+import { postNewContact } from 'redux/contacts/contactsOperations';
+
+import s from './ContactForm.module.css';
 
 const initialState = { name: '', number: '' };
 
-function ContactForm() {
-  const dispatch = useDispatch();
+export default function ContactForm() {
   const [formData, setFormData] = useState(initialState);
   const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const eventName = e.target.getAttribute('name');
@@ -18,23 +22,15 @@ function ContactForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-
     const { name, number } = formData;
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
 
     if (contacts.find(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
       return;
     }
 
-    dispatch(addContact(newContact));
-    setFormData({ ...initialState });
+    dispatch(postNewContact({ name, number }));
   };
-
   return (
     <form onSubmit={handleSubmit} className={s.formContact}>
       <label className={s.label}>
@@ -65,5 +61,3 @@ function ContactForm() {
     </form>
   );
 }
-
-export default ContactForm;
