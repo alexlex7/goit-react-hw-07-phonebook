@@ -1,6 +1,7 @@
 import s from './ContactsList.module.css';
 import ContactsListElement from './ContactListElement';
 import { useSelector } from 'react-redux';
+import { ListGroup } from 'react-bootstrap';
 
 function ContactsList() {
   const contacts = useSelector(state => state.contacts.items);
@@ -11,11 +12,11 @@ function ContactsList() {
   );
 
   return (
-    <ul className={s.list}>
+    <ListGroup className={s.list}>
       {filteredContacts.map(({ id, name, number }) => (
         <ContactsListElement key={id} name={name} number={number} id={id} />
       ))}
-    </ul>
+    </ListGroup>
   );
 }
 
