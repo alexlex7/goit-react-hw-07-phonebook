@@ -8,7 +8,7 @@ function ContactsList() {
   const filter = useSelector(state => state.contacts.filter);
 
   const filteredContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(filter)
+    name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
